@@ -4,6 +4,10 @@ Bank App - DataArt Flutter Test Task
 
 ## Getting Started
 
+login: admin
+
+password: admin
+
 Flutter 3.13.6 • channel stable • https://github.com/flutter/flutter.git
 
 Framework • revision ead455963c (6 days ago) • 2023-09-26 18:28:17 -0700
