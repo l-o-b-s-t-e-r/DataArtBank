@@ -1,30 +1,18 @@
-import 'package:data_art_bank/actions/actions.dart';
-import 'package:data_art_bank/models/app_state.dart';
-import 'package:data_art_bank/models/login_state.dart';
-import 'package:redux/redux.dart';
+import 'package:data_art_bank/models/states/app_state.dart';
+import 'package:data_art_bank/reducers/login_reducer.dart';
+import 'package:data_art_bank/reducers/transaction_details_reducer.dart';
+import 'package:data_art_bank/reducers/transactions_reducer.dart';
 
 class AppReducer {
   static AppState create(AppState state, action) {
     return AppState(
-      loginState: _loadingReducer(state.loginState, action),
+      loginState: LoginReducer.reduce(state.loginState, action),
+      transactionsState:
+          TransactionsReducer.reduce(state.transactionsState, action),
+      transactionDetailsState: TransactionDetailsReducer.reduce(
+        state.transactionDetailsState,
+        action,
+      ),
     );
   }
-
-  static final _loadingReducer = combineReducers<LoginState>([
-    TypedReducer<LoginState, LoginAction>(
-      (state, action) => state.copyWith(
-        login: action.login,
-        password: action.password,
-      ),
-    ),
-    TypedReducer<LoginState, LoginLoadingAction>(
-      (state, _) => state.copyWith(status: LoginStatusLoading()),
-    ),
-    TypedReducer<LoginState, LoginSuccessAction>(
-      (state, _) => state.copyWith(status: LoginStatusSuccess()),
-    ),
-    TypedReducer<LoginState, LoginFailedAction>(
-      (state, action) => state.copyWith(status: LoginStatusFailed(action.code)),
-    ),
-  ]);
 }

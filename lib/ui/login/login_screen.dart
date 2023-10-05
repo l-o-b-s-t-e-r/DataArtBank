@@ -1,20 +1,18 @@
-import 'package:data_art_bank/actions/actions.dart';
+import 'package:data_art_bank/actions/login_actions.dart';
 import 'package:data_art_bank/extensions.dart';
-import 'package:data_art_bank/models/app_state.dart';
-import 'package:data_art_bank/models/login_state.dart';
-import 'package:data_art_bank/selectors/selectors.dart';
+import 'package:data_art_bank/models/states/app_state.dart';
+import 'package:data_art_bank/models/states/login_state.dart';
+import 'package:data_art_bank/selectors/login_selector.dart';
+import 'package:data_art_bank/ui/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+  static const routeName = '/';
 
-class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,13 +97,6 @@ class _LoginFormState extends State<_LoginForm> {
     }
   }
 
-  /*void _incrementCounter(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(builder: (BuildContext _) => const LoginScreen()),
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, LoginState>(
@@ -113,9 +104,7 @@ class _LoginFormState extends State<_LoginForm> {
       converter: (Store<AppState> store) => LoginSelector.select(store.state),
       onWillChange: (prevState, newState) {
         if (newState.status.isSuccess()) {
-          print("NAVIGATE");
-        } else {
-          print("FUCK");
+          Navigator.pushNamed(context, MainScreen.routeName);
         }
       },
       builder: (context, loginState) {
@@ -150,7 +139,7 @@ class _LoginFormState extends State<_LoginForm> {
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.onPrimary,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               child: Padding(

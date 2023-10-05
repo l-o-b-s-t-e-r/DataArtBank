@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:data_art_bank/actions/actions.dart';
-import 'package:data_art_bank/models/app_state.dart';
+import 'package:data_art_bank/actions/login_actions.dart';
+import 'package:data_art_bank/models/states/app_state.dart';
 import 'package:data_art_bank/repositories/auth_repository.dart';
 import 'package:redux/redux.dart';
 
@@ -21,7 +21,6 @@ class AuthMiddleware {
     LoginAction action,
     NextDispatcher next,
   ) async {
-    //next(action);
     store.dispatch(LoginLoadingAction());
     try {
       await repository.login(action.login, action.password);
